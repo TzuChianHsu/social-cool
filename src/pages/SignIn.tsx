@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, Form, Container, Message } from 'semantic-ui-react'
 import firebase from '../utils/firebase';
- import { useNavigate } from 'react-router-dom'
+ import { useNavigate,useLocation } from 'react-router-dom'
  import 'firebase/auth';
 
 interface StringMap { [key: string]: string; }
@@ -22,11 +22,14 @@ function Signin () {
     const [ password, setPassword] = useState('')
     const [ errorMsg, setErrorMsg] = useState<any>(null);
     const [ loading, setLoading ]= useState(false)
+    const location = useLocation()
+
+
     const onSubmit = () => {
         setLoading(true)
         if(active === 'signin') {
            firebase.auth().signInWithEmailAndPassword(email, password).then(()=> {
-             navigate('/')
+            navigate('/')
            }).catch((error)=> {
               setErrorMsg(ERROR_SIGNIN_MSG[error.code])
            }).finally(()=> {
