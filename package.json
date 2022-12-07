@@ -3,7 +3,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "dev:mock": "USE_MOCK=true vite",
+    "build:mock":"USE_CHUNK_MOCK=true vite build"
   },
   "dependencies": {
     "axios": "^1.2.1",
