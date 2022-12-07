@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom'
 import Signin from './pages/SignIn';
 import Header from './Header';
-import Post from './pages/Post';
+import NewPost from './pages/NewPost';
 import Account from './pages/Account';
 import Dashboard from './pages/Dashboard';
 import { UserContext} from './context';
@@ -38,7 +38,7 @@ const Views = () => {
          <Route path='/' element={<Dashboard />} />
           <Route path='/signIn' element={<Signin />} />
           <Route element={<ProtectedRoutes />}>
-              <Route path='/newPost' element={<Post />} />
+              <Route path='/newPost' element={<NewPost />} />
               <Route path='/my' element={<Account />} />
               <Route path='*' element={<Navigate to='/' replace />} />
           </Route>

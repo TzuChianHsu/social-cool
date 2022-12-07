@@ -15,7 +15,7 @@ const ERROR_SIGNIN_MSG: StringMap = {
     'auth/user-not-found': '信箱不存在',
     'auth/wrong-password': '密碼錯誤'
 }
-function Signin () {
+const Signin = () => {
     let navigate = useNavigate();
     const  [active, setActive] = useState('signin')
     const [ email, setEmail] = useState('');
