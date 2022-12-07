@@ -3,24 +3,33 @@ import { Grid, Item, Image, Icon } from 'semantic-ui-react';
 import Topics from '../components/topics';
 import firebase from '../utils/firebase'
 import 'firebase/firestore';
+import { getPostList } from '../api/posts'
 
 const Post =(props: any) =>{
   const [posts, setPosts] = useState<any>()
    useEffect(()=> {
-    firebase.firestore().collection('posts').get().then((collectionSnapshot) =>{
-      const data = collectionSnapshot.docs.map(doc => {
-        const id = doc.id
-        return { ...doc.data(), id }
-      })
-      setPosts(data)
-    } 
-    )
-  })
+    const fetchData = async () => {
+    const res = await getPostList({})
+    setPosts(res?.data)
+    return res?.data
+    }
+   fetchData()
+    //  getPostList({})
+    // firebase.firestore().collection('posts').get().then((collectionSnapshot) =>{
+    //   const data = collectionSnapshot.docs.map(doc => {
+    //     const id = doc.id
+    //     return { ...doc.data(), id }
+    //   })
+    //   setPosts(data)
+    // } 
+    // )
+  }, [])
   return (
     <Grid>
       <Grid.Row type="flex">
         <Grid.Column width={3}><Topics></Topics></Grid.Column>
-        <Grid.Column width={10}><Item.Group>{ posts?.map((post: any) => {
+        <Grid.Column width={10}><Item.Group>
+          { posts?.map((post: any) => {
           return <Item key={post.id}>
             <Item.Image src={post?.imageUrl}></Item.Image>
             <Item.Content>
@@ -37,7 +46,8 @@ const Post =(props: any) =>{
               </Item.Extra>
             </Item.Content>
           </Item>
-        })}</Item.Group></Grid.Column>
+        })}
+        </Item.Group></Grid.Column>
         <Grid.Column width={3}>空白</Grid.Column>
       </Grid.Row>
     </Grid>

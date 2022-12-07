@@ -4,7 +4,8 @@ import firebase from '../utils/firebase'
 import 'firebase/firestore';
 import 'firebase/storage';
 import  { useNavigate } from 'react-router-dom'
-
+import { getTopicList } from '../api/posts'
+import axios from 'axios'
 
 const NewPost =(props: any) =>{
   let navigate = useNavigate();
@@ -14,14 +15,15 @@ const NewPost =(props: any) =>{
   const [topicName, setTopicName] = useState<any>()
   const [file, setFile] = useState<any>()
   const [loading, setLoading] = useState(false)
+
   useEffect(()=> {
-    firebase.firestore().collection('topics').get().then((collectionSnapshot) =>{
-      const data = collectionSnapshot.docs.map(doc => {
-        return doc.data();
-      })
-      setTopics(data)
-    } 
-    )
+    // firebase.firestore().collection('topics').get().then((collectionSnapshot) =>{
+    //   const data = collectionSnapshot.docs.map(doc => {
+    //     return doc.data();
+    //   })
+    //   setTopics(data)
+    // } 
+    // )
   })
 
   const topicOptions = topics?.map((topic: any)=> {
