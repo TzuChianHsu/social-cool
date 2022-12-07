@@ -1,18 +1,22 @@
-import React, {useEffect, useState } from 'react';
-import { Grid, Item, Image, Icon, Container } from 'semantic-ui-react';
+import React, { useContext, useEffect,useState } from 'react';
+import {
+  Link,
+} from 'react-router-dom'
+import { UserContext} from '../context';
+import { Grid, Item, Image, Icon, Container } from 'semantic-ui-react'
 import Topics from '../components/topics';
-import firebase from '../utils/firebase'
-import 'firebase/firestore';
-import { getPostList } from '../api/posts'
-import { Link } from 'react-router-dom';
+import { getPostById  } from '../api/posts'
+import axios from 'axios'
 
-const Post =(props: any) =>{
-  const [posts, setPosts] = useState<any>()
+const Post =()=> {
+  const { user } = useContext<any>(UserContext)
+    const [post, setPost] = useState<any>()
    useEffect(()=> {
     const fetchData = async () => {
-    const res = await getPostList({})
-    setPosts(res?.data)
-    return res?.data
+    const res = await getPostById(0)
+    console.log(res, 'res')
+    setPost(res?.data)
+    return res
     }
    fetchData()
     //  getPostList({})
@@ -25,14 +29,14 @@ const Post =(props: any) =>{
     // } 
     // )
   }, [])
+
   return (
-    <Container>
+        <Container>
     <Grid>
       <Grid.Row type="flex">
-        <Grid.Column width={3}><Topics></Topics></Grid.Column>
+        {/* <Grid.Column width={3}><Topics></Topics></Grid.Column> */}
         <Grid.Column width={10}><Item.Group>
-          { posts?.map((post: any, index: any) => {
-          return <Item key={post.id +index } as={Link} to={`/posts/${post.id}`}>
+            { post &&   <Item key={post.id}>
             <Item.Image src={post?.imageUrl || "https://react.semantic-ui.com/images/wireframe/image.png"}></Item.Image>
             <Item.Content>
               <Item.Meta>
@@ -48,7 +52,8 @@ const Post =(props: any) =>{
               </Item.Extra>
             </Item.Content>
           </Item>
-        })}
+        }
+        
         </Item.Group></Grid.Column>
         <Grid.Column width={3}>空白</Grid.Column>
       </Grid.Row>

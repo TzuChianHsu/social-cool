@@ -15,15 +15,15 @@
     // axios的请求拦截器
     http.interceptors.request.use((config) => {
         // TODO: map判断 只是用来验证 是否可以取消请求，实际情况还要自行处理逻辑
-        if (!map.has('url')) {
-            map.set('url', config.url);
-        } else {
-            // 取消请求
-            source.cancel();
-        }
+        // if (!map.has('url')) {
+        //     map.set('url', config.url);
+        // } else {
+        //     // 取消请求
+        //     source.cancel();
+        // }
         
-        // 配合后端 配置请求需要携带的参数
-        config.headers!.token = 'token';
+        // // 配合后端 配置请求需要携带的参数
+        // config.headers!.token = 'token';
         // config.cancelToken = source.token;
 
         return config
